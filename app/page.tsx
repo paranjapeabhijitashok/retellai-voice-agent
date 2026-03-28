@@ -38,6 +38,7 @@ export default function Home() {
   const [reason, setReason] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
   const [callId, setCallId] = useState('')
+  const [honeypot, setHoneypot] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -48,7 +49,7 @@ export default function Home() {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, phone, reason }),
+        body: JSON.stringify({ name, email, phone, reason, website: honeypot }),
       })
       const data = await res.json()
 
@@ -109,6 +110,18 @@ export default function Home() {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
+
+              {/* Honeypot — invisible to humans, bots fill it and get silently blocked */}
+              <input
+                type="text"
+                name="website"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="hidden"
+              />
 
               {/* Name */}
               <div>
