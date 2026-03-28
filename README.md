@@ -17,9 +17,9 @@ This app replaces the FormTrigger with a custom Next.js UI and calls RetellAI di
 
 ```json
 {
-  "name": "Priya Sharma",
-  "email": "priya@example.com",
-  "phone": "+919876543210",
+  "name": "Abhijit Paranjape",
+  "email": "abhijit@example.com",
+  "phone": "+919923384420",
   "reason": "I'd like to discuss building an AI agent for my business"
 }
 ```
