@@ -76,7 +76,7 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-[#0C1928] flex flex-col font-[family-name:var(--font-poppins)]">
+    <main className="min-h-screen bg-[#0C1920] flex flex-col font-[family-name:var(--font-poppins)]">
 
       {/* Header */}
       <header className="border-b border-[#1A2E45] px-6 py-4 flex-shrink-0">
@@ -93,6 +93,7 @@ export default function Home() {
       {/* Main content */}
       <div className="flex-1 max-w-xl mx-auto w-full px-6 py-10">
 
+        {/* ── Step 1: Contact Form ── */}
         {step === 'form' && (
           <>
             <div className="mb-8">
@@ -108,86 +109,171 @@ export default function Home() {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
+
+              {/* Name */}
               <div>
-                <label className="block text-[#3D4F63] text-[10px] tracking-[0.18em] uppercase mb-2">Your Name</label>
-                <input type="text" placeholder="e.g. Priya Sharma" value={name} onChange={(e) => setName(e.target.value)} required className="w-full bg-[#1A2E45]/30 border border-[#1A2E45] rounded-lg px-4 py-3 text-white placeholder-[#3D4F63]/60 text-sm focus:outline-none focus:border-[#C46B3A]/50 transition-colors" />
+                <label className="block text-[#3D4F63] text-[10px] tracking-[0.18em] uppercase mb-2">
+                  Your Name
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. Priya Sharma"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  className="w-full bg-[#1A2E45]/30 border border-[#1A2E45] rounded-lg px-4 py-3 text-white placeholder-[#3D4F63]/60 text-sm focus:outline-none focus:border-[#C46B3A]/50 transition-colors"
+                />
               </div>
+
+              {/* Email */}
               <div>
-                <label className="block text-[#3D4F63] text-[10px] tracking-[0.18em] uppercase mb-2">Email Address</label>
-                <input type="email" placeholder="e.g. priya@example.com" value={email} onChange={(e) => setEmail(e.target.value)} required className="w-full bg-[#1A2E45]/30 border border-[#1A2E45] rounded-lg px-4 py-3 text-white placeholder-[#3D4F63]/60 text-sm focus:outline-none focus:border-[#C46B3A]/50 transition-colors" />
+                <label className="block text-[#3D4F63] text-[10px] tracking-[0.18em] uppercase mb-2">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  placeholder="e.g. priya@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="w-full bg-[#1A2E45]/30 border border-[#1A2E45] rounded-lg px-4 py-3 text-white placeholder-[#3D4F63]/60 text-sm focus:outline-none focus:border-[#C46B3A]/50 transition-colors"
+                />
               </div>
+
+              {/* Phone */}
               <div>
-                <label className="block text-[#3D4F63] text-[10px] tracking-[0.18em] uppercase mb-2">Phone Number</label>
-                <input type="tel" placeholder="e.g. +91 98765 43210" value={phone} onChange={(e) => setPhone(e.target.value)} required className="w-full bg-[#1A2E45]/30 border border-[#1A2E45] rounded-lg px-4 py-3 text-white placeholder-[#3D4F63]/60 text-sm focus:outline-none focus:border-[#C46B3A]/50 transition-colors" />
+                <label className="block text-[#3D4F63] text-[10px] tracking-[0.18em] uppercase mb-2">
+                  Phone Number
+                </label>
+                <input
+                  type="tel"
+                  placeholder="e.g. +91 98765 43210"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  required
+                  className="w-full bg-[#1A2E45]/30 border border-[#1A2E45] rounded-lg px-4 py-3 text-white placeholder-[#3D4F63]/60 text-sm focus:outline-none focus:border-[#C46B3A]/50 transition-colors"
+                />
                 <p className="text-[#3D4F63] text-[10px] mt-1.5 ml-1">Include country code — e.g. +1 for US, +44 for UK, +91 for India</p>
               </div>
+
+              {/* Reason */}
               <div>
-                <label className="block text-[#3D4F63] text-[10px] tracking-[0.18em] uppercase mb-2">Reason for Contacting</label>
-                <textarea placeholder="e.g. I'd like to discuss building an AI agent for my business" value={reason} onChange={(e) => setReason(e.target.value)} required rows={3} className="w-full bg-[#1A2E45]/30 border border-[#1A2E45] rounded-lg px-4 py-3 text-white placeholder-[#3D4F63]/60 text-sm focus:outline-none focus:border-[#C46B3A]/50 transition-colors resize-none" />
+                <label className="block text-[#3D4F63] text-[10px] tracking-[0.18em] uppercase mb-2">
+                  Reason for Contacting
+                </label>
+                <textarea
+                  placeholder="e.g. I'd like to discuss building an AI agent for my business"
+                  value={reason}
+                  onChange={(e) => setReason(e.target.value)}
+                  required
+                  rows={3}
+                  className="w-full bg-[#1A2E45]/30 border border-[#1A2E45] rounded-lg px-4 py-3 text-white placeholder-[#3D4F63]/60 text-sm focus:outline-none focus:border-[#C46B3A]/50 transition-colors resize-none"
+                />
               </div>
-              <button type="submit" disabled={!name.trim() || !email.trim() || !phone.trim() || !reason.trim()} className="w-full bg-[#C46B3A] hover:bg-[#D4794A] disabled:bg-[#1A2E45] disabled:cursor-not-allowed text-white disabled:text-[#3D4F63] font-semibold rounded-lg py-3.5 text-sm tracking-wide transition-colors flex items-center justify-center gap-2">
+
+              <button
+                type="submit"
+                disabled={!name.trim() || !email.trim() || !phone.trim() || !reason.trim()}
+                className="w-full bg-[#C46B3A] hover:bg-[#E0A85C] disabled:bg-[#1A2E45] disabled:cursor-not-allowed text-white disabled:text-[#3D4F63] font-semibold rounded-lg py-3.5 text-sm tracking-wide transition-colors flex items-center justify-center gap-2"
+              >
                 <PhoneWaveIcon className="w-4 h-4" />
                 Request a Call
               </button>
-              <p className="text-center text-[#3D4F63] text-xs">Our AI agent will call you within seconds of submitting</p>
+
+              <p className="text-center text-[#3D4F63] text-xs">
+                Our AI agent will call you within seconds of submitting
+              </p>
+
             </form>
           </>
         )}
 
+        {/* ── Step 2: Calling / Loading ── */}
         {step === 'calling' && (
           <div className="py-20 text-center">
             <div className="relative inline-flex items-center justify-center mb-8">
               <div className="w-16 h-16 border-[1.5px] border-[#C46B3A] border-t-transparent rounded-full animate-spin" />
               <PhoneWaveIcon className="absolute w-6 h-6 text-[#C46B3A]" />
             </div>
-            <h2 className="font-[family-name:var(--font-lora)] text-2xl text-white mb-3">Connecting your call…</h2>
-            <p className="text-[#3D4F63] text-sm leading-relaxed max-w-xs mx-auto">Our AI agent is dialling your number now. This usually takes less than 10 seconds.</p>
+            <h2 className="font-[family-name:var(--font-lora)] text-2xl text-white mb-3">
+              Connecting your call…
+            </h2>
+            <p className="text-[#3D4F63] text-sm leading-relaxed max-w-xs mx-auto">
+              Our AI agent is dialling your number now. This usually takes less than 10 seconds.
+            </p>
             <div className="flex justify-center gap-2 mt-8">
               {[0, 1, 2, 3].map((i) => (
-                <div key={i} className="w-1.5 h-1.5 rounded-full bg-[#C46B3A] animate-pulse" style={{ animationDelay: `${i * 150}ms` }} />
+                <div
+                  key={i}
+                  className="w-1.5 h-1.5 rounded-full bg-[#C46B3A] animate-pulse"
+                  style={{ animationDelay: `${i * 150}ms` }}
+                />
               ))}
             </div>
           </div>
         )}
 
+        {/* ── Step 3: Success ── */}
         {step === 'success' && (
           <div className="py-16 text-center">
             <div className="w-16 h-16 border border-[#C46B3A]/40 rounded-full flex items-center justify-center mx-auto mb-6">
               <CheckIcon className="w-7 h-7 text-[#C46B3A]" />
             </div>
-            <h2 className="font-[family-name:var(--font-lora)] text-2xl text-white mb-3">Your phone is ringing!</h2>
+            <h2 className="font-[family-name:var(--font-lora)] text-2xl text-white mb-3">
+              Your phone is ringing!
+            </h2>
             <p className="text-[#3D4F63] text-sm leading-relaxed mb-8 max-w-xs mx-auto">
               Our AI voice agent is calling <span className="text-white font-medium">{phone}</span> right now. Pick up — it&apos;s ready to help.
             </p>
+
             {callId && (
               <div className="inline-block border border-[#1A2E45] rounded-lg px-4 py-2 mb-8">
                 <p className="text-[#3D4F63] text-[10px] tracking-[0.15em] uppercase mb-1">Call Reference</p>
                 <p className="text-white font-mono text-xs">{callId}</p>
               </div>
             )}
+
             <div className="space-y-3">
               <p className="text-[#3D4F63] text-xs max-w-xs mx-auto leading-relaxed">
                 Missed the call? A summary will be sent to <span className="text-white">{email}</span>.
               </p>
-              <button onClick={handleReset} className="text-[#3D4F63] hover:text-white text-xs py-2 transition-colors underline underline-offset-2">Submit another request</button>
+              <button
+                onClick={handleReset}
+                className="text-[#3D4F63] hover:text-white text-xs py-2 transition-colors underline underline-offset-2"
+              >
+                Submit another request
+              </button>
             </div>
           </div>
         )}
 
+        {/* ── Step 4: Error ── */}
         {step === 'error' && (
           <div className="py-16 text-center">
             <div className="w-16 h-16 border border-red-800/40 rounded-full flex items-center justify-center mx-auto mb-6">
               <span className="text-red-400 text-2xl font-light">!</span>
             </div>
-            <h2 className="font-[family-name:var(--font-lora)] text-2xl text-white mb-3">Call failed</h2>
-            <p className="text-[#3D4F63] text-sm leading-relaxed mb-2 max-w-xs mx-auto">{errorMsg}</p>
-            <p className="text-[#3D4F63] text-xs mb-8 max-w-xs mx-auto">Please make sure your phone number includes the country code (e.g. +1, +44, +91).</p>
-            <button onClick={handleReset} className="bg-[#C46B3A] hover:bg-[#D4794A] text-white font-semibold rounded-lg px-8 py-3.5 text-sm tracking-wide transition-colors">Try Again</button>
+            <h2 className="font-[family-name:var(--font-lora)] text-2xl text-white mb-3">
+              Call failed
+            </h2>
+            <p className="text-[#3D4F63] text-sm leading-relaxed mb-2 max-w-xs mx-auto">
+              {errorMsg}
+            </p>
+            <p className="text-[#3D4F63] text-xs mb-8 max-w-xs mx-auto">
+              Please make sure your phone number includes the country code (e.g. +1, +44, +91).
+            </p>
+            <button
+              onClick={handleReset}
+              className="bg-[#C46B3A] hover:bg-[#E0A85C] text-white font-semibold rounded-lg px-8 py-3.5 text-sm tracking-wide transition-colors"
+            >
+              Try Again
+            </button>
           </div>
         )}
 
       </div>
 
+      {/* Footer */}
       <footer className="border-t border-[#1A2E45] px-6 py-4 flex-shrink-0">
         <div className="max-w-xl mx-auto flex items-center justify-between">
           <p className="text-[#3D4F63] text-xs">Smart systems. Real results. 24/7.</p>

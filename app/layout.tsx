@@ -16,7 +16,7 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: "Contact Us — Abhijit's Consulting",
+  title: 'Contact Us — Abhijit\'s Consulting',
   description: 'Submit your details and our AI voice agent will call you back instantly.',
 }
 
@@ -25,7 +25,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${lora.variable} ${poppins.variable} h-full`}>
-      <body className="min-h-full flex flex-col bg-[#0C1928]">{children}</body>
+      <body className="min-h-full flex flex-col bg-[#0C1920]">{children}</body>
     </html>
   )
 }
