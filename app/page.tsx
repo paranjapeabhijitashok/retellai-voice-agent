@@ -37,6 +37,8 @@ export default function Home() {
   const [phone, setPhone] = useState('')
   const [reason, setReason] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
+  const [errorCode, setErrorCode] = useState<string | null>(null)
+  const [retryMinutes, setRetryMinutes] = useState<number | null>(null)
   const [callId, setCallId] = useState('')
   const [honeypot, setHoneypot] = useState('')
 
@@ -44,6 +46,8 @@ export default function Home() {
     e.preventDefault()
     setStep('calling')
     setErrorMsg('')
+    setErrorCode(null)
+    setRetryMinutes(null)
 
     try {
       const res = await fetch('/api/contact', {
@@ -58,10 +62,12 @@ export default function Home() {
         setStep('success')
       } else {
         setErrorMsg(data.error || 'Something went wrong. Please try again.')
+        setErrorCode(data.code ?? null)
+        setRetryMinutes(data.retryAfterMinutes ?? null)
         setStep('error')
       }
     } catch {
-      setErrorMsg('Network error. Please check your connection and try again.')
+      setErrorMsg('No internet connection detected. Please check your connection and try again.')
       setStep('error')
     }
   }
@@ -73,6 +79,8 @@ export default function Home() {
     setPhone('')
     setReason('')
     setErrorMsg('')
+    setErrorCode(null)
+    setRetryMinutes(null)
     setCallId('')
   }
 
@@ -263,24 +271,47 @@ export default function Home() {
         {/* ── Step 4: Error ── */}
         {step === 'error' && (
           <div className="py-16 text-center">
-            <div className="w-16 h-16 border border-red-800/40 rounded-full flex items-center justify-center mx-auto mb-6">
-              <span className="text-red-400 text-2xl font-light">!</span>
+            <div className={`w-16 h-16 border rounded-full flex items-center justify-center mx-auto mb-6 ${
+              errorCode === 'RATE_LIMITED'
+                ? 'border-amber-700/40'
+                : 'border-red-800/40'
+            }`}>
+              <span className={`text-2xl font-light ${
+                errorCode === 'RATE_LIMITED' ? 'text-amber-400' : 'text-red-400'
+              }`}>
+                {errorCode === 'RATE_LIMITED' ? '⏱' : '!'}
+              </span>
             </div>
+
             <h2 className="font-[family-name:var(--font-lora)] text-2xl text-white mb-3">
-              Call failed
+              {errorCode === 'RATE_LIMITED' ? 'Limit reached' : 'Something went wrong'}
             </h2>
-            <p className="text-[#3D4F63] text-sm leading-relaxed mb-2 max-w-xs mx-auto">
+
+            <p className="text-[#3D4F63] text-sm leading-relaxed mb-6 max-w-xs mx-auto">
               {errorMsg}
             </p>
-            <p className="text-[#3D4F63] text-xs mb-8 max-w-xs mx-auto">
-              Please make sure your phone number includes the country code (e.g. +1, +44, +91).
-            </p>
-            <button
-              onClick={handleReset}
-              className="bg-[#C46B3A] hover:bg-[#E0A85C] text-white font-semibold rounded-lg px-8 py-3.5 text-sm tracking-wide transition-colors"
-            >
-              Try Again
-            </button>
+
+            {errorCode === 'RATE_LIMITED' ? (
+              <div className="border border-[#1A2E45] rounded-lg px-4 py-3 inline-block mb-8">
+                <p className="text-[#3D4F63] text-[10px] tracking-[0.15em] uppercase mb-1">Try again in</p>
+                <p className="text-white font-mono text-sm">
+                  {retryMinutes !== null ? `${retryMinutes} minute${retryMinutes !== 1 ? 's' : ''}` : 'a little while'}
+                </p>
+              </div>
+            ) : (
+              <p className="text-[#3D4F63] text-xs mb-8 max-w-xs mx-auto">
+                Make sure your phone number includes the country code — e.g. +1, +44, or +91.
+              </p>
+            )}
+
+            {errorCode !== 'RATE_LIMITED' && (
+              <button
+                onClick={handleReset}
+                className="bg-[#C46B3A] hover:bg-[#E0A85C] text-white font-semibold rounded-lg px-8 py-3.5 text-sm tracking-wide transition-colors"
+              >
+                Try Again
+              </button>
+            )}
           </div>
         )}
 
